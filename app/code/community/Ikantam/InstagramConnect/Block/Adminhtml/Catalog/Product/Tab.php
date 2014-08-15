@@ -34,16 +34,6 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface {
          
         $this->setTemplate('ikantam/instagram_connect/catalog/product/tab.phtml');
     }
-    
-    // protected function _prepareLayout()
-    // {
-    //     $this->_addButton('add_new', array(
-    //         'label'   => Mage::helper('catalog')->__('Update Images List'),
-    //         'onclick' => "setLocation('{$this->getUrl('*/*/update')}')",
-    //         'class'   => 'add'
-    //     ));
-    //     return parent::_prepareLayout();
-    // }
      
     /**
      * Retrieve the label used for the tab relating to this block

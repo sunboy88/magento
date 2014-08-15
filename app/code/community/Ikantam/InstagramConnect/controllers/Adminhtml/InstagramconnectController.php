@@ -65,6 +65,24 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
 
         $this->_redirect('instagramconnect/adminhtml_instagramconnect/new');
     }
+
+    public function update1Action()
+    {
+        $collectionImages = Mage::getModel('instagramconnect/instagramimage')->getCollection()->addFilter('is_approved', 0)->addFilter('is_visible', 1);
+        $html = '';
+         foreach ($collectionImages as $image){
+            $html.= '<div class="item" id="'.$image->getImageId() .'" style="width:150px;margin:10px; text-align:center; float:left;">';
+            $html.= '<p>'.Mage::helper('core')->escapeHtml($image->getTag()).'</p>';
+            $html.= '<img src="'. $image->getThumbnailUrl().'" />';
+            $html.= '<br>';
+            $html.= ' <a style="float:left;" onclick="return approveImage('.$image->getImageId().');" href="javascript:void(0);">Approve</a>';
+            $html.= '<a style="float:right;" onclick="return deleteImage('. $image->getImageId().');" href="javascript:void(0);">Delete</a>';
+            $html.= '</div>';
+         }
+        
+        $this->getResponse()->setBody(json_encode(array('success' => true, 'data' => $html)));
+        //return $html;
+    }
     
     public function newAction()
     {

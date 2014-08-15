@@ -26,7 +26,122 @@
  * Custom tab template
  */
 ?>
+<?php
+    $_product = Mage::registry('current_product');
+    $productId =  $_product->getId();
+    echo ($_product->getData('instagram_source'));
+?>
 <div class="input-field">
- <label for="custom_field">Instagram Images</label>
+ <label for="custom_field">Input hashtags</label>
  <input type="text" class="input-text" name="custom_field" id="custom_field" />
+ <a style="float:right;" onclick="return updateImage();" href="javascript:void(0);">Update Images</a> 
 </div>
+<div id='content-images'>
+
+</div>
+<script>
+function updateImage() {
+    new Ajax.Request("<?php echo $this->getUrl('instagramconnect/adminhtml_instagramconnect/update1'); ?>", {
+                parameters: {isAjax: 1, method: 'POST'},
+                onSuccess: function(transport) {
+
+                    try{
+                        response = eval('(' + transport.responseText + ')');
+                        
+                    } catch (e) {
+                        response = {};
+                    }
+                    if (response.success) {
+                        $('content-images').insert(response.data);
+                    } else {
+                        var msg = response.error_messages;
+                        if (typeof(msg)=='object') {
+                            msg = msg.join("\n");
+                        }
+                        if (msg) {
+                            $('review-please-wait').hide();
+                            alert(msg);
+                            return;
+                        }
+                    }
+                    $('review-please-wait').hide();
+                    alert('<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>');
+                    return;
+                },
+                onFailure: function(){
+                    alert('<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>');
+                    $('review-please-wait').hide();
+                }
+            });
+            return false;
+        }
+ function approveImage(id) {
+    new Ajax.Request("<?php echo $this->getUrl('instagramconnect/adminhtml_instagramconnect/approve'); ?>", {
+                parameters: {isAjax: 1, method: 'POST', id: id},
+                onSuccess: function(transport) {
+                    try{
+                        response = eval('(' + transport.responseText + ')');
+                    } catch (e) {
+                        response = {};
+                    }
+                    if (response.success) {
+                        $(id).remove();
+                    } else {
+                        var msg = response.error_messages;
+                        if (typeof(msg)=='object') {
+                            msg = msg.join("\n");
+                        }
+                        if (msg) {
+                            $('review-please-wait').hide();
+                            alert(msg);
+                            return;
+                        }
+                    }
+                    $('review-please-wait').hide();
+                    alert('<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>');
+                    return;
+                },
+                onFailure: function(){
+                    alert('<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>');
+                    $('review-please-wait').hide();
+                }
+            });
+            return false;
+        }
+
+
+function deleteImage(id) {
+    new Ajax.Request("<?php echo $this->getUrl('instagramconnect/adminhtml_instagramconnect/delete'); ?>", {
+                parameters: {isAjax: 1, method: 'POST', id: id},
+                onSuccess: function(transport) {
+                    try{
+                        response = eval('(' + transport.responseText + ')');
+                    } catch (e) {
+                        response = {};
+                    }
+                    if (response.success) {
+                        $(id).remove();
+                    } else {
+                        var msg = response.error_messages;
+                        if (typeof(msg)=='object') {
+                            msg = msg.join("\n");
+                        }
+                        if (msg) {
+                            $('review-please-wait').hide();
+                            alert(msg);
+                            return;
+                        }
+                    }
+                    $('review-please-wait').hide();
+                    alert('<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>');
+                    return;
+                },
+                onFailure: function(){
+                    alert('<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>');
+                    $('review-please-wait').hide();
+                }
+            });
+            return false;
+        }
+        
+</script>
