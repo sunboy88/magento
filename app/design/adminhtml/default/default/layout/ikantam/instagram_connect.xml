@@ -29,6 +29,10 @@
             <name>Instagram Images</name>
             <block>instagramconnect/adminhtml_catalog_product_tab</block>
         </action>
+         <action method="addTab">
+            <name>Instagram Images Approved</name>
+            <block>instagramconnect/adminhtml_catalog_product_tabapprove</block>
+        </action>
     </reference>
 </adminhtml_catalog_product_edit>
   

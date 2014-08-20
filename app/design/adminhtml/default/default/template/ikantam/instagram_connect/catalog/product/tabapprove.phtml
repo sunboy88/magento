@@ -31,27 +31,23 @@
     $productId =  $_product->getId();
     //echo ($_product->getData('instagram_source'));
 ?>
-<table cellspacing="0">
-    <tr>
-        <td style="width:50%;"><h3 class="icon-head head-products"><?php echo Mage::helper('catalog')->__('Choose Instagram Images') ?></h3></td>
-    </tr>
-     <tr>
-        <td>
-            <label for="custom_field">Filter by hashtags</label>
-            <input type="text" class="input-text" name="custom_field" id="custom_field" />
-        </td>
-        <td class="a-right" style="">
-            <button style="float:right;" onclick="return updateImage();" href="javascript:void(0);">Update Images</button>
-        </td>
-    </tr>
-</table>
-<!-- <div class="input-field">
- <label for="custom_field">Input hashtags</label>
- <input type="text" class="input-text" name="custom_field" id="custom_field" />
- <a style="float:right;" onclick="return updateImage();" href="javascript:void(0);">Update Images</a> 
-</div> -->
-<div id='content-images'>
+<div class="content-header">
+    <table cellspacing="0">
+        <tbody><tr>
+            <td style="width:50%;"><h3 class="icon-head head-sales-order">Approved Instagram Images</h3></td>
+        </tr>
+    </tbody></table>
+</div>
 
+<div>
+    <?php foreach ($this->getImagesApprovedProduct() as $image) : ?>
+        <div class="item" id="<?php echo $image->getImageId(); ?>" style="width:150px;margin:10px; text-align:center; float:left;">
+            <img src="<?php echo $image->getThumbnailUrl(); ?>" />
+            <br>
+            <a style="float:right;" onclick="return deleteImage('<?php echo $image->getImageId(); ?>');" href="javascript:void(0);">Delete Image</a>    
+        </div>
+    <?php endforeach; ?>
+    <div style="clear:both;"></div>
 </div>
 <script>
 function updateImage() {

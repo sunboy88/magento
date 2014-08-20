@@ -75,8 +75,8 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
             $html.= '<p>'.Mage::helper('core')->escapeHtml($image->getTag()).'</p>';
             $html.= '<img src="'. $image->getThumbnailUrl().'" />';
             $html.= '<br>';
-            $html.= ' <a style="float:left;" onclick="return approveImage('.$image->getImageId().');" href="javascript:void(0);">Approve</a>';
-            $html.= '<a style="float:right;" onclick="return deleteImage('. $image->getImageId().');" href="javascript:void(0);">Delete</a>';
+            $html.= ' <a style="float:left;" onclick="return approveImage(\''.$image->getImageId().'\');" href="javascript:void(0);">Approve</a>';
+            $html.= '<a style="float:right;" onclick="return deleteImage(\''. $image->getImageId().'\');" href="javascript:void(0);">Delete</a>';
             $html.= '</div>';
          }
         
