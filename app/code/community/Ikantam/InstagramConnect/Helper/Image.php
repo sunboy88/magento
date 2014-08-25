@@ -137,38 +137,41 @@ class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 		}
 
         $imageCount = 0;
-        $max = 5;
+        $max = 2;
         foreach ($data->data as $item)
 		{
 			//var_dump($item->id);die('111');
-			$captionText = "";
-			if($item->caption){
-				$captionText = $item->caption->text;
+			$imageCount++;
+			if($imageCount <= $max){
+				$captionText = "";
+				if($item->caption){
+					$captionText = $item->caption->text;
+				}
+				
+				$username    = $item->user->username;
+				
+				$standardResolutionUrl = $item->images->standard_resolution->url;
+				$lowResolutionUrl      = $item->images->low_resolution->url;
+				$thumbnailUrl          = $item->images->thumbnail->url;
+				$systemId              = $item->id;
+				$linkInstagram         = $item->link;
+				$image = Mage::getModel('instagramconnect/instagramimage');
+
+				$image->setStandardResolutionUrl($standardResolutionUrl)
+					->setLowResolutionUrl($lowResolutionUrl)
+					->setThumbnailUrl($thumbnailUrl)
+					->setImageId($systemId)
+					->setUsername($username)
+					->setCaptionText($captionText)
+					->setTag($tag)
+					->setLinkInstagram($linkInstagram)
+					->setProductInstagram(0)
+					->save();
 			}
 			
-			$username    = $item->user->username;
-			
-			$standardResolutionUrl = $item->images->standard_resolution->url;
-			$lowResolutionUrl      = $item->images->low_resolution->url;
-			$thumbnailUrl          = $item->images->thumbnail->url;
-			$systemId              = $item->id;
-			$linkInstagram         = $item->link;
-			$image = Mage::getModel('instagramconnect/instagramimage');
 
-			$image->setStandardResolutionUrl($standardResolutionUrl)
-				->setLowResolutionUrl($lowResolutionUrl)
-				->setThumbnailUrl($thumbnailUrl)
-				->setImageId($systemId)
-				->setUsername($username)
-				->setCaptionText($captionText)
-				->setTag($tag)
-				->setLinkInstagram($linkInstagram)
-				->save();
-
-            $imageCount++;
-            if($imageCount == $max){
-            	break;
-            }
+            
+            //var_dump($imageCount);
 		}
         $out['count'] = $imageCount;
 		

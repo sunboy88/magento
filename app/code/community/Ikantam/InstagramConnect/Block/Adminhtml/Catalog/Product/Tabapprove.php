@@ -34,6 +34,7 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface {
          
         $this->setTemplate('ikantam/instagram_connect/catalog/product/tabapprove.phtml');
         $this->setUseAjax(true);
+        
         return parent::_construct();
     }
      
@@ -121,8 +122,10 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface {
      * @return string
      */
   public function getTabUrl()
-   {
-       return $this->getUrl('instagramconnect/adminhtml_instagramconnect/updateApprovedAjax');
+   {    
+        $_product = Mage::registry('current_product');
+        $productId =  $_product->getId();
+        return $this->getUrl('instagramconnect/adminhtml_instagramconnect/updateApprovedAjax', array('product_insta' => $productId));
    }
 
 

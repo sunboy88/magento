@@ -42,8 +42,8 @@
     
     
     <catalog_product_view>
-    	<reference name="product.info.media" as="media">
-    		<action method="setTemplate"><template>ikantam/instagram_connect/catalog/product/view/media.phtml</template></action>
+    	<reference name="product.info.upsell" as="related">
+    		<action method="setTemplate"><template>ikantam/instagram_connect/catalog/product/view/related.phtml</template></action>
     	</reference>
     </catalog_product_view>
 
