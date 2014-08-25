@@ -24,7 +24,7 @@
 <config>
     <tabs>
         <ikantam translate="label" module="instagramconnect">
-            <label>iKantam</label>
+            <label>Instagram Setting</label>
             <sort_order>9999999</sort_order>
         </ikantam>
     </tabs>
@@ -88,7 +88,7 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </product>
                         
-                        <product_limit translate="label comment">
+                        <!-- <product_limit translate="label comment">
                             <label>Max Number of Images to show on Product Page: </label>
                             <comment>Zero or empty for no limit</comment>
                             <frontend_type>text</frontend_type>
@@ -96,7 +96,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </product_limit>
+                        </product_limit> -->
                         
                         <client_id translate="label comment">
                             <label>Instagram Client ID: </label>
