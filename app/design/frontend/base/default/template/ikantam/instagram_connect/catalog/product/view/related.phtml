@@ -29,14 +29,14 @@
     if($_product){
         $productId =  $_product->getId();      
     }
-    
+    $helper = Mage::helper('instagramconnect');
     $collectionApproved =  Mage::getModel('instagramconnect/instagramimage')->getCollection()
                         ->addFilter('is_approved', 1)
                         ->addFilter('is_visible', 1)
                         ->addFilter('product_instagram',$productId);
     //echo ($_product->getData('instagram_source'));
 ?>
-<?php if(count($collectionApproved)): ?>
+<?php if(count($collectionApproved) && $helper->showImagesOnProductPage() && $helper->isEnabled()): ?>
 <div class="block block-related">
     <div class="block-title">
         <strong><span><?php echo $this->__('Instagram Images') ?></span></strong>

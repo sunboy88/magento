@@ -58,7 +58,7 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </enabled>
                         
-                        <homepage translate="label comment">
+                        <!-- <homepage translate="label comment">
                             <label>Show Images on Home Page: </label>
                             <frontend_type>select</frontend_type>
                             <sort_order>20</sort_order>
@@ -76,7 +76,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </homepage_limit>
+                        </homepage_limit> -->
                         
                         <product translate="label comment">
                             <label>Show Images on Product Pages: </label>
