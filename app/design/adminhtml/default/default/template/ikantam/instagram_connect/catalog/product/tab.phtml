@@ -33,16 +33,21 @@
 ?>
 <table cellspacing="0">
     <tr>
-        <td style="width:50%;"><h3 class="icon-head head-products"><?php echo Mage::helper('catalog')->__('Choose Instagram Images') ?></h3></td>
+        <td style="width:100%;"><h3 class="icon-head head-products"><?php echo Mage::helper('catalog')->__('Choose Instagram Images') ?></h3></td>
     </tr>
      <tr>
         <td>
             <label for="custom_field">Filter by hashtags</label>
             <input type="text" class="input-text" name="custom_field" id="custom_field" />
         </td>
-        <td class="a-right" style="">
+        <td class="a-right">
             <button style="float:right;" onclick="return updateImage();" href="javascript:void(0);">Update Images</button>
         </td>
+
+        <!-- <td class="a-right" style="">
+            <button style="float:right;" onclick="return updateImage();" href="javascript:void(0);">Clear All</button>
+        </td> -->
+
     </tr>
 </table>
 <!-- <div class="input-field">
@@ -51,11 +56,11 @@
  <a style="float:right;" onclick="return updateImage();" href="javascript:void(0);">Update Images</a> 
 </div> -->
 <div id='content-images'>
-
 </div>
 <script>
 function updateImage() {
-    new Ajax.Request("<?php echo $this->getUrl('instagramconnect/adminhtml_instagramconnect/update1'); ?>", {
+    alert('dddd');
+    new Ajax.Request("<?php echo $this->getUrl('instagramconnect/adminhtml_instagramconnect/updateFilter'); ?>", {
                 parameters: {isAjax: 1, method: 'POST'},
                 onSuccess: function(transport) {
 
@@ -66,6 +71,7 @@ function updateImage() {
                         response = {};
                     }
                     if (response.success) {
+                        $('content-images').replace('<div id="content-images"></div>');
                         $('content-images').insert(response.data);
                     } else {
                         var msg = response.error_messages;

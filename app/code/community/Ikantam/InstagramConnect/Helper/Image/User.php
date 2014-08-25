@@ -159,6 +159,7 @@ class Ikantam_InstagramConnect_Helper_Image_User extends Ikantam_InstagramConnec
 
         foreach ($data->data as $item)
         {
+            var_dump($item);die('111');
             $captionText = '';
             if($item->caption){
                 $captionText = $item->caption->text;

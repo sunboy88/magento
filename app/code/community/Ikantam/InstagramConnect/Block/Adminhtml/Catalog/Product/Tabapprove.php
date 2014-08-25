@@ -33,6 +33,8 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface {
         parent::_construct();
          
         $this->setTemplate('ikantam/instagram_connect/catalog/product/tabapprove.phtml');
+        $this->setUseAjax(true);
+        return parent::_construct();
     }
      
     /**
@@ -108,7 +110,7 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface {
      */
    public function getSkipGenerateContent()
    {
-       return false;
+       return true;
    }
  
     /**
@@ -120,7 +122,7 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface {
      */
   public function getTabUrl()
    {
-       return $this->getUrl('instagramconnect/adminhtml_instagramconnect/update1');
+       return $this->getUrl('instagramconnect/adminhtml_instagramconnect/updateApprovedAjax');
    }
 
 

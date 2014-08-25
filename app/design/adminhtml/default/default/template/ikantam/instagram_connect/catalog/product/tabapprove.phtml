@@ -31,15 +31,10 @@
     $productId =  $_product->getId();
     //echo ($_product->getData('instagram_source'));
 ?>
-<div class="content-header">
-    <table cellspacing="0">
-        <tbody><tr>
-            <td style="width:50%;"><h3 class="icon-head head-sales-order">Approved Instagram Images</h3></td>
-        </tr>
-    </tbody></table>
-</div>
 
-<div>
+
+</div>
+<!-- <div>
     <?php foreach ($this->getImagesApprovedProduct() as $image) : ?>
         <div class="item" id="<?php echo $image->getImageId(); ?>" style="width:150px;margin:10px; text-align:center; float:left;">
             <img src="<?php echo $image->getThumbnailUrl(); ?>" />
@@ -48,43 +43,8 @@
         </div>
     <?php endforeach; ?>
     <div style="clear:both;"></div>
-</div>
-<script>
-function updateImage() {
-    new Ajax.Request("<?php echo $this->getUrl('instagramconnect/adminhtml_instagramconnect/update1'); ?>", {
-                parameters: {isAjax: 1, method: 'POST'},
-                onSuccess: function(transport) {
+</div> -->
 
-                    try{
-                        response = eval('(' + transport.responseText + ')');
-                        
-                    } catch (e) {
-                        response = {};
-                    }
-                    if (response.success) {
-                        $('content-images').insert(response.data);
-                    } else {
-                        var msg = response.error_messages;
-                        if (typeof(msg)=='object') {
-                            msg = msg.join("\n");
-                        }
-                        if (msg) {
-                            $('review-please-wait').hide();
-                            alert(msg);
-                            return;
-                        }
-                    }
-                    $('review-please-wait').hide();
-                    alert('<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>');
-                    return;
-                },
-                onFailure: function(){
-                    alert('<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>');
-                    $('review-please-wait').hide();
-                }
-            });
-            return false;
-        }
  function approveImage(id) {
     new Ajax.Request("<?php echo Mage::getUrl('instagramconnect/adminhtml_instagramconnect/approve'); ?>", {
                 parameters: {isAjax: 1, method: 'POST', id: id},

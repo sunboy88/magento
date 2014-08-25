@@ -21,7 +21,7 @@
  */
 class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 {
-    const MAX_PHOTO_COUNT = 50;
+    const MAX_PHOTO_COUNT = 5;
 
 	protected $_configPath = 'ikantam_instagramconnect/module_options/states';
 
@@ -48,6 +48,7 @@ class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 		$savedId = !empty($state) ? $state : 0;
 
         $imagesCount = 0;
+        //die('runUpdate');
 		$result = $this->getImages($url, $tag);
 
         if(isset($result['error'])){
@@ -136,8 +137,10 @@ class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 		}
 
         $imageCount = 0;
+        $max = 5;
         foreach ($data->data as $item)
 		{
+			//var_dump($item->id);die('111');
 			$captionText = "";
 			if($item->caption){
 				$captionText = $item->caption->text;
@@ -149,7 +152,7 @@ class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 			$lowResolutionUrl      = $item->images->low_resolution->url;
 			$thumbnailUrl          = $item->images->thumbnail->url;
 			$systemId              = $item->id;
-
+			$linkInstagram         = $item->link;
 			$image = Mage::getModel('instagramconnect/instagramimage');
 
 			$image->setStandardResolutionUrl($standardResolutionUrl)
@@ -159,9 +162,13 @@ class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 				->setUsername($username)
 				->setCaptionText($captionText)
 				->setTag($tag)
+				->setLinkInstagram($linkInstagram)
 				->save();
 
             $imageCount++;
+            if($imageCount == $max){
+            	break;
+            }
 		}
         $out['count'] = $imageCount;
 		
