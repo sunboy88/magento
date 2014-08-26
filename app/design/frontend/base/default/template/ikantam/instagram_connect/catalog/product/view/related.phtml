@@ -30,6 +30,7 @@
         $productId =  $_product->getId();      
     }
     $helper = Mage::helper('instagramconnect');
+    $limitProduct = $helper->getProductPageLimit();
     $collectionApproved =  Mage::getModel('instagramconnect/instagramimage')->getCollection()
                         ->addFilter('is_approved', 1)
                         ->addFilter('is_visible', 1)
@@ -44,14 +45,16 @@
     <div class="block-content">
         
         <ol class="mini-products-list" id="block-related">
+        <?php $i = 0; ?>
         <?php foreach($collectionApproved as $_item): ?>
+            <?php if($i == $limitProduct) : break; endif; ?>
             <li class="item">
-               
                 <div class="product">
                     <a target="_blank" href="<?php echo $_item->getLinkInstagram() ?>" title="<?php echo $_item->getTag()?>" class="product-image"><img src="<?php echo $_item->getStandardResolutionUrl() ?>" width="150" height="150" alt="<?php echo $this->htmlEscape($_item->getTag()) ?>" /></a>
                     
                 </div>
             </li>
+            <?php $i++; ?>
         <?php endforeach ?>
         </ol>
         <script type="text/javascript">decorateList('block-related', 'none-recursive')</script>
