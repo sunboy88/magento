@@ -21,7 +21,7 @@
  */
 class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 {
-    const MAX_PHOTO_COUNT = 5;
+    const MAX_PHOTO_COUNT = 50;
 
 	protected $_configPath = 'ikantam_instagramconnect/module_options/states';
 
@@ -42,15 +42,15 @@ class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 		Mage::getModel('core/config')->saveConfig($this->_configPath, serialize($states)); 
 	}
 	
-	public function runUpdate($url, $tag)
+	public function runUpdate($url, $tag, $numUpdate)
 	{
 		$state = $this->getState($tag);
 		$savedId = !empty($state) ? $state : 0;
 
         $imagesCount = 0;
         //die('runUpdate');
-		$result = $this->getImages($url, $tag);
-
+		$result = $this->getImages($url, $tag , $numUpdate);
+		//var_dump($result);die('123');
         if(isset($result['error'])){
             return false;
         }
@@ -64,8 +64,8 @@ class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 			$maxTagId    = $result['nextMaxId'];
 			$this->setState($tag, $maxTagId);//save to config
 
-			while ($endpointUrl && ($maxTagId > $savedId) && ($imagesCount < self::MAX_PHOTO_COUNT) ) {
-				$result = $this->getImages($endpointUrl, $tag);
+			while ($endpointUrl && ($maxTagId > $savedId) && ($imagesCount <= 20) ) {
+				//$result = $this->getImages($endpointUrl, $tag, $numUpdate);
 
                 if(isset($result['error'])){
                     return false;
@@ -89,17 +89,17 @@ class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 	}
 	
 	
-	public function update($hashtags)
+	public function update($hashtags,$numUpdate)
 	{
         $responseStatus = true;
 		foreach ($hashtags as $tag) {
 			$endpointUrl = $this->getEndpointUrl($tag, 'tags');
-            $responseStatus = $responseStatus && $this->runUpdate($endpointUrl, $tag);
+            $responseStatus = $responseStatus && $this->runUpdate($endpointUrl, $tag, $numUpdate);
 		}
         return $responseStatus;
 	}
 	
-	protected function getImages($endpointUrl, $tag)
+	protected function getImages($endpointUrl, $tag ,$numUpdate)
 	{
 		$ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $endpointUrl);
@@ -137,7 +137,7 @@ class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 		}
 
         $imageCount = 0;
-        $max = 2;
+        $max = $numUpdate;
         foreach ($data->data as $item)
 		{
 			//var_dump($item->id);die('111');

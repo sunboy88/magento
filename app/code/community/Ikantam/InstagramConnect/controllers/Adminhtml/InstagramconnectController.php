@@ -71,10 +71,15 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
     {
         //$this->loadLayout();
         $dataHashtags = $this->getRequest()->getPost('hashtags');
+        $numUpdate = (int)$this->getRequest()->getPost('numupdate');
+        if($numUpdate > 20){
+            $numUpdate = 20;
+        }
+        
         $hashtags = explode(',',$dataHashtags);
          //var_dump($hashtags);
         // die('111');
-        $result = Mage::helper('instagramconnect/image')->update($hashtags);
+        $result = Mage::helper('instagramconnect/image')->update($hashtags,$numUpdate);
         //var_dump($result);die('123');
         $message = $this->__('An error occured. Make sure you are authenticated with Instagram.');
         if(!$result){
@@ -194,8 +199,11 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
     }
 
     public function clearAllAction(){
+        $hashtags = $this->getRequest()->getPost('hashtags');
         $modelInstagram = Mage::getModel('instagramconnect/instagramimage');
-        $collectionImages = $modelInstagram->getCollection()->addFilter('is_approved', 0);
+        $collectionImages = $modelInstagram->getCollection()
+                            ->addFilter('tag', $hashtags)
+                            ->addFilter('is_approved', 0);
 
         //var_dump(count($collectionImages));die('111');
         foreach ($collectionImages as $images) {

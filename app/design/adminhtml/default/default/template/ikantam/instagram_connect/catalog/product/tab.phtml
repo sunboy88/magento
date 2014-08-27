@@ -39,6 +39,8 @@
         <td>
             <label for="custom_field">Input hashtags</label>
             <input type="text" class="input-text" name="hashtags_field" id="hashtags_field" />
+            <label for="custom_field">Input number images update</label>
+            <input type="text" class="input-text" name="num_update" id="num_update" maxlength="2" size="5"/>
         </td>
         <td class="a-right">
             <button style="margin-right:100px;" onclick="return updateImage();" href="javascript:void(0);">Update Images</button>
@@ -58,13 +60,19 @@
 <div id='content-images'>
 </div>
 <script>
+    
 function updateImage() {
     var hashtags = $('hashtags_field').getValue();
+    var numUpdate = $('num_update').getValue();
+    if(isNaN(numUpdate) || !numUpdate.length){
+        numUpdate = 2;
+    }
     new Ajax.Request("<?php echo $this->getUrl('instagramconnect/adminhtml_instagramconnect/updateFilter'); ?>", {
                 parameters: {
                     isAjax: 1, 
                     method: 'POST',
-                    hashtags : hashtags
+                    hashtags : hashtags,
+                    numupdate : numUpdate
                 },
                 onSuccess: function(transport) {
 
@@ -100,9 +108,11 @@ function updateImage() {
             return false;
         }
 function clearAll() {
+    var hashtags = $('hashtags_field').getValue();
     new Ajax.Request("<?php echo $this->getUrl('instagramconnect/adminhtml_instagramconnect/clearAll'); ?>", {
                 parameters: {
-                    isAjax: 1, 
+                    isAjax: 1,
+                    hashtags : hashtags,
                     method: 'POST'
                 },
                 onSuccess: function(transport) {
