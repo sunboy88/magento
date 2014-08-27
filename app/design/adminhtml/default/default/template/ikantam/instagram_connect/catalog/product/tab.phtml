@@ -37,16 +37,16 @@
     </tr>
      <tr>
         <td>
-            <!-- <label for="custom_field">Filter by hashtags</label>
-            <input type="text" class="input-text" name="custom_field" id="custom_field" /> -->
+            <label for="custom_field">Input hashtags</label>
+            <input type="text" class="input-text" name="hashtags_field" id="hashtags_field" />
         </td>
         <td class="a-right">
-            <button style="float:right;" onclick="return updateImage();" href="javascript:void(0);">Update Images</button>
+            <button style="margin-right:100px;" onclick="return updateImage();" href="javascript:void(0);">Update Images</button>
         </td>
 
-        <!-- <td class="a-right" style="">
-            <button style="float:right;" onclick="return updateImage();" href="javascript:void(0);">Clear All</button>
-        </td> -->
+        <td class="a-right" style="">
+            <button style="float:right;" onclick="return clearAll();" href="javascript:void(0);">Clear All</button>
+        </td> 
 
     </tr>
 </table>
@@ -59,8 +59,13 @@
 </div>
 <script>
 function updateImage() {
+    var hashtags = $('hashtags_field').getValue();
     new Ajax.Request("<?php echo $this->getUrl('instagramconnect/adminhtml_instagramconnect/updateFilter'); ?>", {
-                parameters: {isAjax: 1, method: 'POST'},
+                parameters: {
+                    isAjax: 1, 
+                    method: 'POST',
+                    hashtags : hashtags
+                },
                 onSuccess: function(transport) {
 
                     try{
@@ -84,11 +89,54 @@ function updateImage() {
                         }
                     }
                     $('review-please-wait').hide();
-                    alert('<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>');
+                    alert("<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>");
                     return;
                 },
                 onFailure: function(){
-                    alert('<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>');
+                    alert("<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>");
+                    $('review-please-wait').hide();
+                }
+            });
+            return false;
+        }
+function clearAll() {
+    new Ajax.Request("<?php echo $this->getUrl('instagramconnect/adminhtml_instagramconnect/clearAll'); ?>", {
+                parameters: {
+                    isAjax: 1, 
+                    method: 'POST'
+                },
+                onSuccess: function(transport) {
+
+                    try{
+                        response = eval('(' + transport.responseText + ')');
+                        
+                    } catch (e) {
+                        response = {};
+                    }
+                    
+                    if (response.success) {
+                        $('content-images').replace('<div id="content-images"></div>');
+                        //$('content-images').insert(response.data);
+                    } else if(response.success == false){
+                        alert("<?php echo $this->jsQuoteEscape($this->__('Error when delete all. Please try again later.')); ?>");
+                            return;
+                    }else {
+                        var msg = response.error_messages;
+                        if (typeof(msg)=='object') {
+                            msg = msg.join("\n");
+                        }
+                        if (msg) {
+                            $('review-please-wait').hide();
+                            alert(msg);
+                            return;
+                        }
+                    }
+                    $('review-please-wait').hide();
+                    alert("<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>");
+                    return;
+                },
+                onFailure: function(){
+                    alert("<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>");
                     $('review-please-wait').hide();
                 }
             });
@@ -121,11 +169,11 @@ function updateImage() {
                         }
                     }
                     $('review-please-wait').hide();
-                    alert('<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>');
+                    alert("<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>");
                     return;
                 },
                 onFailure: function(){
-                    alert('<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>');
+                    alert("<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>");
                     $('review-please-wait').hide();
                 }
             });
@@ -160,11 +208,11 @@ function deleteImage(id) {
                         }
                     }
                     $('review-please-wait').hide();
-                    alert('<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>');
+                    alert("<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>");
                     return;
                 },
                 onFailure: function(){
-                    alert('<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>');
+                    alert("<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>");
                     $('review-please-wait').hide();
                 }
             });
@@ -198,11 +246,11 @@ function deleteApprovedImage(id) {
                         }
                     }
                     $('review-please-wait').hide();
-                    alert('<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>');
+                    alert("<?php echo $this->jsQuoteEscape($this->__('Unknown Error. Please try again later.')); ?>");
                     return;
                 },
                 onFailure: function(){
-                    alert('<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>');
+                    alert("<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>");
                     $('review-please-wait').hide();
                 }
             });

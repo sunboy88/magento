@@ -179,11 +179,12 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
     
     public function clearAllAction(){
         $collectionImages = Mage::getModel('instagramconnect/instagramimage')->getCollection()->addFilter('is_approved', 0);
+        $collectionImages->clear();
         $modelInstagram = Mage::getModel('instagramconnect/instagramimage');
         foreach ($collectionImages as $images) {
             try {
                         $modelInstagram->setId($images->getImageId())->delete();
-                        echo "Data deleted successfully.";
+                        //echo "Data deleted successfully.";
                         return true;
                         
                     } catch (Exception $e){

@@ -70,15 +70,22 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
     public function updateFilterAction()
     {
         //$this->loadLayout();
-        $result = Mage::helper('instagramconnect/image')->update();
+        $dataHashtags = $this->getRequest()->getPost('hashtags');
+        $hashtags = explode(',',$dataHashtags);
+         //var_dump($hashtags);
+        // die('111');
+        $result = Mage::helper('instagramconnect/image')->update($hashtags);
+        //var_dump($result);die('123');
         $message = $this->__('An error occured. Make sure you are authenticated with Instagram.');
         if(!$result){
             Mage::getSingleton('adminhtml/session')->addError($message);
         }else{
             $collectionImages = Mage::getModel('instagramconnect/instagramimage')->getCollection()
                                 ->addFilter('is_approved', 0)
+                                ->addFilter('tag', $hashtags)
                                 ->setOrder('image_id', 'DESC')
                                 ->addFilter('is_visible', 1);
+            //var_dump(count($collectionImages));die('123');
             $html = '';
             foreach ($collectionImages as $image){
                 $html.= '<div class="item" id="'.$image->getImageId() .'" style="width:150px;margin:10px; text-align:center; float:left;">';
@@ -102,6 +109,7 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
         $collectionApproved =  Mage::getModel('instagramconnect/instagramimage')->getCollection()
                         ->addFilter('is_approved', 1)
                         ->addFilter('is_visible', 1)
+                        ->setOrder('image_id', 'DESC')
                         ->addFilter('product_instagram',$productId);
         foreach ($collectionApproved as $image){
             $html.= '<div class="item" id="'.$image->getImageId().'" style="width:150px;margin:10px; text-align:center; float:left;">';
@@ -185,23 +193,20 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
          $this->getResponse()->setBody($html);
     }
 
-
-    
     public function clearAllAction(){
-        $collectionImages = Mage::getModel('instagramconnect/instagramimage')->getCollection()->addFilter('is_approved', 0);
         $modelInstagram = Mage::getModel('instagramconnect/instagramimage');
+        $collectionImages = $modelInstagram->getCollection()->addFilter('is_approved', 0);
+
+        //var_dump(count($collectionImages));die('111');
         foreach ($collectionImages as $images) {
-            try {
-                        $modelInstagram->setId($images->getImageId())->delete();
-                        echo "Data deleted successfully.";
-                        return true;
-                        
-                    } catch (Exception $e){
-                        echo $e->getMessage();
-                        return false;
+            try { 
+                    $modelInstagram->setId($images->getImageId())->delete();    
+                } catch (Exception $e){
+                    $this->getResponse()->setBody(json_encode(array('success' => false))); 
+                    return false;
                 }
         }
-
+        $this->getResponse()->setBody(json_encode(array('success' => true))); 
     }
     public function newAction()
     {

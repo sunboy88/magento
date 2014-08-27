@@ -116,7 +116,7 @@
                             <show_in_store>1</show_in_store>
                         </client_secret>
 
-                        <user translate="label comment">
+                        <!-- <user translate="label comment">
                             <label>Auth user</label>
                             <frontend_type>text</frontend_type>
                             <frontend_model>instagramconnect/adminhtml_system_config_form_field_user</frontend_model>
@@ -125,9 +125,9 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <comment>Auth user on Instagram</comment>
-                        </user>
+                        </user> -->
 
-                        <updatetype translate="label">
+                        <!-- <updatetype translate="label">
                             <label>Update type: </label>
                             <frontend_type>select</frontend_type>
                             <sort_order>67</sort_order>
@@ -155,7 +155,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </users>
+                        </users> -->
                         
                     </fields>
                 </module_options>

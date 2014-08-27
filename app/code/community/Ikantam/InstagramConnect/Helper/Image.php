@@ -89,10 +89,10 @@ class Ikantam_InstagramConnect_Helper_Image extends Mage_Core_Helper_Abstract
 	}
 	
 	
-	public function update()
+	public function update($hashtags)
 	{
         $responseStatus = true;
-		foreach ($this->getTags() as $tag) {
+		foreach ($hashtags as $tag) {
 			$endpointUrl = $this->getEndpointUrl($tag, 'tags');
             $responseStatus = $responseStatus && $this->runUpdate($endpointUrl, $tag);
 		}
