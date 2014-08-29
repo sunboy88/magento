@@ -94,13 +94,13 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
             $html = '';
             $max = count($collectionImages);
             if($max > 20){
-                $html.= '<div style="text-align:center;font-size:20px">Page: ';
+                $html.= '<div style="text-align:center;font-size:20px;margin:20px;">Page: ';
                 $numPage = $max/20 + 1;
                 for($num=1;$num <= $numPage;$num++) {
                     if($num==1){
-                        $html.='  <a style="color:red" class="paging-'.$num.'"  id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';
+                        $html.='  <a style="color:red;margin-left:5px;" class="paging-'.$num.'"  id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';
                     }else{
-                        $html.='  <a  class="paging-'.$num.'" id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';    
+                        $html.='  <a style="margin-left:5px;" class="paging-'.$num.'" id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';    
                     }
                     
                 }
@@ -156,7 +156,7 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
             }
             
             if($max > 20){
-                $html.= '<div style="clear:both"><div style="text-align:center;font-size:20px">Page: ';
+                $html.= '<div style="clear:both"></div><div style="text-align:center;font-size:20px;margin:20px;">Page: ';
                 $numPage = $max/20 + 1;
                 for($num=1;$num <= $numPage;$num++) {
                     if($num==1){
