@@ -98,7 +98,7 @@
   	</admin>
   	
   	<adminhtml>
-		<menu>
+		<!-- <menu>
 	  		<instagramconnect module="instagramconnect">
 				<title>Instagram</title>
 				<sort_order>100</sort_order>
@@ -117,7 +117,7 @@
 
 				</children>
 	  		</instagramconnect>
-		</menu>
+		</menu> -->
 		
 		<acl>
 	  		<resources>
