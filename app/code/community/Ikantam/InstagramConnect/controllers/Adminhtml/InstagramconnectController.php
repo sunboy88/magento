@@ -92,16 +92,72 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
                                 ->addFilter('is_visible', 1);
             //var_dump(count($collectionImages));die('123');
             $html = '';
-            foreach ($collectionImages as $image){
-                $html.= '<div class="item" id="'.$image->getImageId() .'" style="width:150px;margin:10px; text-align:center; float:left;">';
-                $html.= '<p>'.Mage::helper('core')->escapeHtml($image->getTag()).'</p>';
-                $html.= '<img src="'. $image->getThumbnailUrl().'" />';
-                $html.= '<br>';
-                $html.= ' <a style="float:left;" onclick="return approveImage(\''.$image->getImageId().'\');" href="javascript:void(0);">Approve</a>';
-                $html.= '<a style="float:right;" onclick="return deleteImage(\''. $image->getImageId().'\');" href="javascript:void(0);">Delete</a>';
+            $max = count($collectionImages);
+            if($max > 20){
+                $html.= ' <div style="text-align:center">Page: ';
+                $numPage = $max/20 + 1;
+                for($num=1;$num <= $numPage;$num++) {
+                    $html.='  <a  id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';
+                }
+                //$html.= '  <a>Next</a> ';
                 $html.= '</div>';
             }
-        
+            $count = 0;
+            $checkDiv = 0;
+            $numberPage = 0;
+            foreach ($collectionImages as $image){
+                $count++;
+                if($max > 20){
+                    if($count==1){
+                        $html.= '<div class="item-images" id="item-image-'.$count.'">';
+                    }
+                    if($count > 20){
+                        $num1 = floor($count/20);
+                        $num2 = $count%20;
+                        if($num2 == 1){
+                            $checkDiv = 1;
+                            $numberPage = $num1 + 1;
+                            //var_dump($num1);
+                            $html.= '<div style="display:none" class="item-images"  id="item-image-'.$numberPage.'">';
+                        }
+                            
+                    }
+                        $html.= '<div class="item" id="'.$image->getImageId() .'" style="width:150px;margin:10px; text-align:center; float:left;">';
+                        $html.= '<p>'.Mage::helper('core')->escapeHtml($image->getTag()).'</p>';
+                        $html.= '<img src="'. $image->getThumbnailUrl().'" />';
+                        $html.= '<br>';
+                        $html.= ' <a style="float:left;" onclick="return approveImage(\''.$image->getImageId().'\');" href="javascript:void(0);">Approve</a>';
+                        $html.= '<a style="float:right;" onclick="return deleteImage(\''. $image->getImageId().'\');" href="javascript:void(0);">Delete</a>';
+                        $html.= '</div>';
+                    if($checkDiv && ($count/20 == $numberPage)){
+                        $html.= '</div>';
+                        $checkDiv = 0;
+                    }
+                    if($count==20){
+                        $html.= '</div>';
+                    }
+                }else{
+                    $html.= '<div class="item-image">';
+                        $html.= '<div class="item" id="'.$image->getImageId() .'" style="width:150px;margin:10px; text-align:center; float:left;">';
+                        $html.= '<p>'.Mage::helper('core')->escapeHtml($image->getTag()).'</p>';
+                        $html.= '<img src="'. $image->getThumbnailUrl().'" />';
+                        $html.= '<br>';
+                        $html.= ' <a style="float:left;" onclick="return approveImage(\''.$image->getImageId().'\');" href="javascript:void(0);">Approve</a>';
+                        $html.= '<a style="float:right;" onclick="return deleteImage(\''. $image->getImageId().'\');" href="javascript:void(0);">Delete</a>';
+                        $html.= '</div>';
+                    $html.= '</div>';
+                }
+            }
+            
+            if($max > 20){
+                $html.= ' <div style="text-align:center">Page: ';
+                $numPage = $max/20 + 1;
+                for($num=1;$num <= $numPage;$num++) {
+                    $html.='  <a  id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';
+                }
+                //$html.= '  <a>Next</a> ';
+                $html.= '</div>';
+            }
             $this->getResponse()->setBody(json_encode(array('success' => true, 'data' => $html))); 
         }
         
