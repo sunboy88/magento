@@ -83,6 +83,7 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
         //var_dump($result);die('123');
         $message = $this->__('An error occured. Make sure you are authenticated with Instagram.');
         if(!$result){
+            $this->getResponse()->setBody(json_encode(array('err' => true)));
             Mage::getSingleton('adminhtml/session')->addError($message);
         }else{
             $collectionImages = Mage::getModel('instagramconnect/instagramimage')->getCollection()

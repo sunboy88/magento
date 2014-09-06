@@ -104,6 +104,9 @@ function updateImage() {
                     } catch (e) {
                         response = {};
                     }
+                    if (response.err) {
+                        alert("<?php echo $this->jsQuoteEscape($this->__('An error occured. Make sure you are authenticated with Instagram.')); ?>");
+                    }
                     if (response.success) {
                         $('content-images').replace('<div id="content-images"></div>');
                         $('content-images').insert(response.data);
