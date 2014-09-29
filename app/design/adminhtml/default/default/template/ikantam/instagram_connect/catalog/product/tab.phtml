@@ -64,25 +64,12 @@ function paging(num){
    // $('review-please-wait').show();
     //$$('div.item-images').hide();
     $$('[id^="paging-"]').invoke("setStyle",{'color':'orange'});
-    $$('.paging-'+num).invoke("setStyle",{'color':'red'});
     $('loading-mask').show();
     $$('[id^="item-image-"]').invoke("setStyle",{'display':'none'});
     $('item-image-'+num).show();
     $('loading-mask').hide();
     //$('review-please-wait').hide();
 }
-
-function pagingBottom(num){
-   // $('review-please-wait').show();
-    //$$('div.item-images').hide();
-    $$('[id^="paging-bottom-"]').invoke("setStyle",{'color':'orange'});
-    $('loading-mask').show();
-    $$('[id^="item-image-"]').invoke("setStyle",{'display':'none'});
-    $('item-image-'+num).show();
-    $('loading-mask').hide();
-    //$('review-please-wait').hide();
-}
-
 function updateImage() {
     var hashtags = $('hashtags_field').getValue();
     var numUpdate = $('num_update').getValue();

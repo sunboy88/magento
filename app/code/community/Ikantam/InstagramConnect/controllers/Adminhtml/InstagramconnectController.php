@@ -94,15 +94,10 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
             $html = '';
             $max = count($collectionImages);
             if($max > 20){
-                $html.= '<div style="text-align:center;font-size:20px">Page: ';
+                $html.= ' <div style="text-align:center">Page: ';
                 $numPage = $max/20 + 1;
                 for($num=1;$num <= $numPage;$num++) {
-                    if($num==1){
-                        $html.='  <a style="color:red" class="paging-'.$num.'"  id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';
-                    }else{
-                        $html.='  <a  class="paging-'.$num.'" id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';    
-                    }
-                    
+                    $html.='  <a  id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';
                 }
                 //$html.= '  <a>Next</a> ';
                 $html.= '</div>';
@@ -134,8 +129,7 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
                         $html.= ' <a style="float:left;" onclick="return approveImage(\''.$image->getImageId().'\');" href="javascript:void(0);">Approve</a>';
                         $html.= '<a style="float:right;" onclick="return deleteImage(\''. $image->getImageId().'\');" href="javascript:void(0);">Delete</a>';
                         $html.= '</div>';
-                    if($checkDiv && ($count/20 == $numberPage) || $count == $max ){
-                        Mage::log('test: '.$count/20);
+                    if($checkDiv && ($count/20 == $numberPage)){
                         $html.= '</div>';
                         $checkDiv = 0;
                     }
@@ -156,15 +150,10 @@ class Ikantam_InstagramConnect_Adminhtml_InstagramconnectController extends Mage
             }
             
             if($max > 20){
-                $html.= '<div style="clear:both"><div style="text-align:center;font-size:20px">Page: ';
+                $html.= ' <div style="text-align:center">Page: ';
                 $numPage = $max/20 + 1;
                 for($num=1;$num <= $numPage;$num++) {
-                    if($num==1){
-                        $html.='  <a style="color:red" class="paging-'.$num.'"  id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';
-                    }else{
-                        $html.='  <a class="paging-'.$num.'"  id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';    
-                    }
-                    
+                    $html.='  <a  id="paging-'.$num.'" href="javascript:void(0);" onclick="paging('.$num.');this.style.color=\'red\'">'.$num.'</a>  ';
                 }
                 //$html.= '  <a>Next</a> ';
                 $html.= '</div>';
