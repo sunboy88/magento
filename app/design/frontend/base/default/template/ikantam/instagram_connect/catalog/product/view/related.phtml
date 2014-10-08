@@ -30,7 +30,11 @@
         $productId =  $_product->getId();      
     }
     $helper = Mage::helper('instagramconnect');
+    $checkLimit = 0;
     $limitProduct = $helper->getProductPageLimit();
+    if($limitProduct == '' || $limitProduct == 0){
+        $checkLimit = 1;
+    }
     $collectionApproved =  Mage::getModel('instagramconnect/instagramimage')->getCollection()
                         ->addFilter('is_approved', 1)
                         ->addFilter('is_visible', 1)

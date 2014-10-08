@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <system>
+            <children>
+                <shippingcity module="shippingcity">
+                    <title>Regions and Shipping Rates</title>
+                    <sort_order>0</sort_order>
+                    <children>
+                        <region module="shippingcity">
+                            <title>Manage Regions</title>
+                            <sort_order>0</sort_order>
+                            <action>adminhtml/region</action>
+                        </region>
+                        <city module="shippingcity">
+                            <title>Manage Cities</title>
+                            <sort_order>1</sort_order>
+                            <action>adminhtml/city</action>
+                        </city>
+                        <shippingrate module="shippingcity">
+                            <title>Manage Shipping Rates</title>
+                            <sort_order>2</sort_order>
+                            <action>adminhtml/shippingrate</action>
+                        </shippingrate>
+                    </children>
+                </shippingcity>
+            </children>
+        </system>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <shippingcity>
+                                <title>Regions and Shipping Rates</title>
+                                <sort_order>1000</sort_order>
+                            </shippingcity>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

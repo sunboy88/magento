@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_region_index>
+        <reference name="content">
+            <block type="shippingcity/adminhtml_regions" name="shippingcity_regions"></block>
+        </reference>
+    </adminhtml_region_index>
+    <adminhtml_city_index>
+        <reference name="content">
+            <block type="shippingcity/adminhtml_city" name="shippingcity_city"></block>
+        </reference>
+    </adminhtml_city_index>
+    <adminhtml_shippingrate_index>
+        <reference name="content">
+            <block type="shippingcity/adminhtml_tablerate" name="shippingcity_tablerate"></block>
+        </reference>
+    </adminhtml_shippingrate_index>
+    <adminhtml_customer_edit>
+        
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/jquery-1.10.2.js</name><params/></action>
+    </reference>
+    </adminhtml_customer_edit>
+</layout>
