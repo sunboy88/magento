@@ -83,14 +83,14 @@
                 <li class="fields">
                     <div class="field">
                         <label for="billing:city" class="required"><em>*</em><?php echo $this->__('City') ?></label>
-                        <div class="input-box">
+                        <div class="input-box" id="billingCity">
                             <input type="text" title="<?php echo $this->__('City') ?>" name="billing[city]" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="billing:city" />
                         </div>
                     </div>
                     <div class="field">
                         <label for="billing:region_id" class="required"><em>*</em><?php echo $this->__('State/Province') ?></label>
                         <div class="input-box">
-                            <select id="billing:region_id" name="billing[region_id]" title="<?php echo $this->__('State/Province') ?>" class="validate-select" style="display:none;">
+                            <select id="billing:region_id" name="billing[region_id]" title="<?php echo $this->__('State/Province') ?>" class="validate-select" style="display:none;" onchange="updateCity();">
                                 <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
                             </select>
                             <script type="text/javascript">
@@ -223,4 +223,34 @@
         });
     }
 //]]>
+function updateCity () {
+    var countryId = $('billing:country_id').getValue();
+    if(countryId == 'VN'){
+        var regionId = $('billing:region_id').getValue();
+        new Ajax.Request("<?php echo $this->getUrl('shippingcity/city/list'); ?>", {
+            method: 'POST',
+            parameters: { regionId : regionId },
+            onSuccess: function(transport) {
+                var data = transport.responseText;
+                var i;
+                var out = "<select id='billingCitySelect'>";     
+                for(i = 0; i < data.length; i++) {
+                    out += "<option value="+ data[i]['value'] +">" + data[i]['label'] + "</option>";
+                }
+                out += "</select>";
+                document.getElementById("billingCity").insert(out);  
+                $('billing:city').hide();
+                $('billingCitySelect').show();      
+            },
+            onFailure: function(){
+                alert("<?php echo $this->jsQuoteEscape($this->__('Server Error. Please try again.')) ?>");
+                $('review-please-wait').hide();
+            }
+        });
+        return false;
+    } else {
+        $('billing:city').show();
+        $('billingCitySelect').hide();
+    }   
+}
 </script>
